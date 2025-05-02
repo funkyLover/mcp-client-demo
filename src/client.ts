@@ -11,9 +11,9 @@ import { CallToolResultSchema } from "@modelcontextprotocol/sdk/types.js";
 
 dotenv.config();
 
-const QWEN_API_KEY = process.env.QWEN_API_KEY;
-if (!QWEN_API_KEY) {
-  throw new Error("QWEN_API_KEY is not set");
+const API_KEY = process.env.API_KEY;
+if (!API_KEY) {
+  throw new Error("API_KEY is not set");
 }
 
 class MCPClient {
@@ -29,7 +29,7 @@ class MCPClient {
   constructor() {
     // 先初始化大模型client和mcp client
     this.openai = new OpenAI({
-      apiKey: QWEN_API_KEY,
+      apiKey: API_KEY,
       baseURL: process.env.BASE_URL,
     });
     this.mcp = new Client({ name: "mcp-client-cli", version: "1.0.0" });
@@ -94,7 +94,7 @@ class MCPClient {
 
     // 使用qwen, 把问题和tools都传递进去
     const response = await this.openai.chat.completions.create({
-      model: "qwen-plus", //模型列表：https://help.aliyun.com/zh/model-studio/getting-started/models
+      model: process.env.MODEL as string,
       messages: messages,
       tools: this.tools,
     });
@@ -140,7 +140,7 @@ class MCPClient {
         try {
           // 再次调用, 这里没有传递tools, 因为是简单例子, 就忽略一些多轮推导类似的特性, 只进行一次tools调用, 然后观察结果就好了
           const response = await this.openai.chat.completions.create({
-            model: "qwen-plus", //模型列表：https://help.aliyun.com/zh/model-studio/getting-started/models
+            model: process.env.MODEL as string,
             messages: messages,
           });
 

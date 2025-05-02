@@ -14,8 +14,9 @@ openai adapter 代码来自 https://github.com/leartbeqiraj1/openai-mcp-client
 
 ```bash
 touch .env
-echo "QWEN_API_KEY=<your key here>" > .env
+echo "API_KEY=<your key here>" > .env
 echo "BASE_URL=<base url here>" > .env
+echo "MODEL=<model name here>" > .env
 ```
 
 安装依赖
